@@ -1,11 +1,15 @@
 import { Routes, Route } from 'react-router-dom'
 
-import FechamentoMes from '../pages/FechamentoMes'
+import Layout from '../components/layout/Layout'
+
+import FechamentoMes from '../pages/fechamento/FechamentoMes'
 
 export default function AppRouter() {
   return (
     <Routes>
-      <Route path="/fechamento" element={<FechamentoMes />} />
+      <Route path="/" element={<Layout />}>
+        <Route path="/fechamento" element={<FechamentoMes />} />
+      </Route>
     </Routes>
   )
 }
