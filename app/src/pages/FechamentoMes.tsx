@@ -1,3 +1,3 @@
 export default function FechamentoMes() {
-  return <h1>fechamento mes</h1>;
+  return <h1>fechamento mes</h1>
 }
