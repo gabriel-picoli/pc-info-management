@@ -8,6 +8,10 @@ const HeaderContainer = styled.header`
   background-color: #121212;
   color: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 425px) {
+    display: none;
+  }
 `
 
 const Title = styled.p`

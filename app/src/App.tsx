@@ -10,7 +10,7 @@ export default function App() {
       <Router future={{ v7_startTransition: true }}>
         <AppRouter />
       </Router>
-      
+
       <GlobalStyle />
     </>
   )
