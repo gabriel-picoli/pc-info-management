@@ -4,7 +4,8 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import styled from 'styled-components'
 import { useEffect } from 'react'
 
-import { fechamentoSchema } from '../../utils/fechamento/fechamentoSchema'
+import { registroSchema } from '../../utils/registro/registroSchema'
+import api from '../../axios-config'
 
 import Input from '../../components/inputs/Input'
 import Dropdown from '../../components/inputs/Dropdown'
@@ -40,16 +41,18 @@ export default function Registro() {
     handleSubmit,
     formState: { errors },
     watch,
-    setValue, // Função para atualizar o valor dos campos
+    setValue, // atualiza o valor dos campos
   } = useForm({
-    resolver: joiResolver(fechamentoSchema),
+    resolver: joiResolver(registroSchema),
   })
 
-  // Monitorando o valor do campo "Deve?"
+  // monitora o valor do campo "deve?"
   const deveValue = watch('deve')
 
-  const onSubmit = (data: any) => {
-    // Remover a formatação de moeda e considerar a vírgula como ponto decimal
+  const onSubmit = async (data: any) => {
+    data.deve = data.deve === 'true'
+
+    // remove a formataçao de moeda
     if (data.valorDevido) {
       data.valorDevido = parseFloat(
         data.valorDevido.replace(/[^0-9,.-]+/g, '').replace(',', '.')
@@ -61,7 +64,24 @@ export default function Registro() {
       )
     }
 
-    console.log('dados enviados ao back:', data)
+    // estrutura final do objeto de fechamento
+    const registroObject = {
+      data: data.data,
+      nomeCliente: data.nomeCliente,
+      servico: data.servico,
+      deve: data.deve,
+      valorDevido: data.valorDevido || 0,
+      valorPago: data.valorPago || 0,
+      formaPagamento: data.formaPagamento,
+      contaAplicada: data.contaAplicada,
+    }
+
+    try {
+      const response = await api.post('/registro', registroObject)
+      console.log('Resposta do backend:', response.data)
+    } catch (error) {
+      console.error('Erro ao enviar dados ao backend:', error)
+    }
   }
 
   // limpar os valores quando "deve?" for "nao"
