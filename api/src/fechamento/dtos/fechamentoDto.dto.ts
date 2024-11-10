@@ -1,29 +1,37 @@
 import { IsString, IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateFechamentoDto {
-  @IsString()
+  @IsString({ message: 'A data é obrigatória e deve ser uma string.' })
   data: string;
 
-  @IsString()
+  @IsString({
+    message: 'O nome do cliente é obrigatório e deve ser uma string.',
+  })
   nomeCliente: string;
 
-  @IsString()
+  @IsString({
+    message: 'O serviço realizado é obrigatório e deve ser uma string.',
+  })
   servico: string;
 
-  @IsBoolean()
+  @IsBoolean({ message: 'O campo "deve" deve ser verdadeiro ou falso.' })
   deve: boolean;
 
   @IsOptional()
-  @IsNumber()
+  @IsNumber({}, { message: 'O valor devido deve ser um número.' })
   valorDevido?: number;
 
   @IsOptional()
-  @IsNumber()
+  @IsNumber({}, { message: 'O valor pago deve ser um número.' })
   valorPago?: number;
 
-  @IsString()
+  @IsString({
+    message: 'A forma de pagamento é obrigatória e deve ser uma string.',
+  })
   formaPagamento: string;
 
-  @IsString()
+  @IsString({
+    message: 'A conta aplicada é obrigatória e deve ser uma string.',
+  })
   contaAplicada: string;
 }

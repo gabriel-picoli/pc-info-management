@@ -9,6 +9,7 @@ import { CreateFechamentoDto } from './dtos/fechamentoDto.dto';
 @Controller('fechamento')
 export class FechamentoController {
   constructor(private readonly fechamentoService: FechamentoService) {}
+
   @Post()
   create(
     @Body() createFechamentoDto: CreateFechamentoDto,
