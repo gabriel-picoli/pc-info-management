@@ -1,14 +1,20 @@
 import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { FaDollarSign, FaRegCalendarAlt } from 'react-icons/fa'
+import { FaDollarSign, FaRegCalendarAlt, FaFileAlt } from 'react-icons/fa'
 
-const NavbarContainer = styled.nav`
+const NavbarContainer = styled.div`
   display: flex;
-  padding: 20px 40px 0px;
+  padding-top: 20px;
   gap: 50px;
   background-color: white;
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+
+  width: 100%;
+
+  @media (max-width: 425px) {
+    justify-content: center;
+  }
 `
 
 const NavItem = styled(Link)<{ $isActive: boolean }>`
@@ -47,10 +53,15 @@ const NavItem = styled(Link)<{ $isActive: boolean }>`
 `
 
 const NavIcon = styled.div`
+  display: flex;
   font-size: 30px;
   margin-bottom: 5px;
   transition: transform 0.2s;
   transform-origin: center center;
+
+  @media (max-width: 425px) {
+    font-size: 25px;
+  }
 `
 
 export default function NavBar() {
@@ -63,6 +74,12 @@ export default function NavBar() {
           <FaRegCalendarAlt />
         </NavIcon>
         Agenda
+      </NavItem>
+      <NavItem to="/registro" $isActive={location.pathname === '/registro'}>
+        <NavIcon>
+          <FaFileAlt />
+        </NavIcon>
+        Registro
       </NavItem>
       <NavItem to="/fechamento" $isActive={location.pathname === '/fechamento'}>
         <NavIcon>
