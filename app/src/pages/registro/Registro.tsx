@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useForm } from 'react-hook-form'
 import { joiResolver } from '@hookform/resolvers/joi'
 import styled from 'styled-components'
+import { useEffect } from 'react'
 
 import { fechamentoSchema } from '../../utils/fechamento/fechamentoSchema'
 
@@ -39,13 +39,39 @@ export default function Registro() {
     control,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue, // Função para atualizar o valor dos campos
   } = useForm({
     resolver: joiResolver(fechamentoSchema),
   })
 
+  // Monitorando o valor do campo "Deve?"
+  const deveValue = watch('deve')
+
   const onSubmit = (data: any) => {
+    // Remover a formatação de moeda e considerar a vírgula como ponto decimal
+    if (data.valorDevido) {
+      data.valorDevido = parseFloat(
+        data.valorDevido.replace(/[^0-9,.-]+/g, '').replace(',', '.')
+      )
+    }
+    if (data.valorPago) {
+      data.valorPago = parseFloat(
+        data.valorPago.replace(/[^0-9,.-]+/g, '').replace(',', '.')
+      )
+    }
+
     console.log('dados enviados ao back:', data)
   }
+
+  // limpar os valores quando "deve?" for "nao"
+  useEffect(() => {
+    if (deveValue === 'false') {
+      setValue('valorDevido', '') // limpa o valor quando nao deve
+    } else {
+      setValue('valorPago', '') // limpa o valor quando deve
+    }
+  }, [deveValue, setValue])
 
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
@@ -54,7 +80,7 @@ export default function Registro() {
         <Input
           name="data"
           control={control}
-          type="text"
+          type="date"
           id="data"
           placeholder="Digite a data"
         />
@@ -113,6 +139,7 @@ export default function Registro() {
           id="valorDevido"
           placeholder="Valor devido"
           isCurrency
+          disabled={deveValue === 'false'}
         />
         {errors.valorDevido && (
           <ErrorMessage>{`${errors.valorDevido.message}`}</ErrorMessage>
@@ -128,6 +155,7 @@ export default function Registro() {
           id="valorPago"
           placeholder="Valor pago"
           isCurrency
+          disabled={deveValue === 'true'}
         />
         {errors.valorPago && (
           <ErrorMessage>{`${errors.valorPago.message}`}</ErrorMessage>
@@ -142,8 +170,11 @@ export default function Registro() {
           id="formaPagamento"
           options={[
             { label: 'Dinheiro', value: 'dinheiro' },
-            { label: 'Cartão', value: 'cartao' },
             { label: 'PIX', value: 'pix' },
+            { label: 'Cartão Débito', value: 'debito' },
+            { label: 'Cartão Crédito', value: 'credito' },
+            { label: 'Boleto', value: 'boleto' },
+            { label: 'Cheque', value: 'cheque' },
           ]}
           placeholder="Selecione uma opção"
         />
@@ -159,8 +190,8 @@ export default function Registro() {
           control={control}
           id="contaAplicada"
           options={[
-            { label: 'Conta 1', value: 'conta1' },
-            { label: 'Conta 2', value: 'conta2' },
+            { label: 'Paulo Cezar Picoli', value: 'paulo' },
+            { label: 'Neuza Tomazelli Picoli', value: 'neuza' },
           ]}
           placeholder="Selecione uma opção"
         />

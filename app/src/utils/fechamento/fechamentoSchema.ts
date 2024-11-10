@@ -13,14 +13,24 @@ export const fechamentoSchema = Joi.object({
   deve: Joi.string().valid('true', 'false').required().messages({
     'any.only': 'Deve? deve ser Sim ou Não',
   }),
-  valorDevido: Joi.number().positive().required().messages({
-    'number.base': 'Valor devido deve ser um número',
-    'number.positive': 'Valor devido deve ser maior que zero',
-  }),
-  valorPago: Joi.number().positive().required().messages({
-    'number.base': 'Valor pago deve ser um número',
-    'number.positive': 'Valor pago deve ser maior que zero',
-  }),
+  valorDevido: Joi.string()
+    .allow('')
+    .when('deve', {
+      is: 'false', // quando "deve" for "não", "valorDevido" pode ser vazio
+      then: Joi.optional(),
+      otherwise: Joi.required().messages({
+        'string.empty': 'Valor devido é obrigatório quando "Deve?" for "Sim"',
+      }),
+    }),
+  valorPago: Joi.string()
+    .allow('')
+    .when('deve', {
+      is: 'true', // quando "deve" for "sim", "valorPago" pode ser vazio
+      then: Joi.optional(),
+      otherwise: Joi.required().messages({
+        'string.empty': 'Valor pago é obrigatório quando "Deve?" for "Não"',
+      }),
+    }),
   formaPagamento: Joi.string()
     .valid('dinheiro', 'cartao', 'pix')
     .required()
