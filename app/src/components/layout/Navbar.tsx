@@ -6,6 +6,7 @@ import { FaDollarSign, FaRegCalendarAlt, FaFileAlt } from 'react-icons/fa'
 const NavbarContainer = styled.div`
   display: flex;
   padding-top: 20px;
+  padding-left: 20px;
   gap: 50px;
   background-color: white;
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
