@@ -3,20 +3,25 @@
 import { Controller, Control, FieldValues } from 'react-hook-form'
 import styled from 'styled-components'
 
-const StyledInput = styled.input<{ $width?: string; $marginRight?: string }>`
+const StyledInput = styled.input<{
+  $width?: string
+  $marginRight?: string
+  $disabled?: boolean
+}>`
   width: ${(props) => props.$width || '100%'};
   height: 30px;
-  background-color: transparent;
-  border: 1px solid #222222;
+  background-color: ${(props) => (props.$disabled ? '#f0f0f0' : 'transparent')};
+  border: 1px solid ${(props) => (props.$disabled ? '#ccc' : '#222222')};
   border-radius: 5px;
   padding: 10px;
   font-size: 13px;
-  color: black;
+  color: ${(props) => (props.$disabled ? '#999' : 'black')};
   margin-right: ${(props) => props.$marginRight || '0px'};
   outline: none;
+  cursor: ${(props) => (props.$disabled ? 'not-allowed' : 'text')};
 
   &::placeholder {
-    color: #999;
+    color: ${(props) => (props.$disabled ? '#ccc' : '#999')};
   }
 `
 
@@ -31,6 +36,7 @@ interface InputProps {
   id: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   isCurrency?: boolean
+  disabled?: boolean 
 }
 
 export default function Input({
@@ -44,6 +50,7 @@ export default function Input({
   id,
   onChange,
   isCurrency,
+  disabled, 
 }: InputProps) {
   return (
     <Controller
@@ -58,6 +65,7 @@ export default function Input({
           type={type}
           id={id}
           placeholder={placeholder}
+          $disabled={disabled} 
           onChange={(e) => {
             field.onChange(e)
             if (isCurrency) {
