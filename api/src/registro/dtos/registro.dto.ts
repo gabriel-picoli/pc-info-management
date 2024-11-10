@@ -1,6 +1,6 @@
 import { IsString, IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
-export class CreateFechamentoDto {
+export class CreateRegistroDto {
   @IsString({ message: 'A data é obrigatória e deve ser uma string.' })
   data: string;
 

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { FechamentoModule } from './fechamento/fechamento.module';
+import { RegistroModule } from './registro/registro.module';
 
 @Module({
-  imports: [FechamentoModule],
+  imports: [RegistroModule],
   controllers: [],
   providers: [],
 })
