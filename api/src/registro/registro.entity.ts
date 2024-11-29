@@ -5,8 +5,8 @@ export class Registro {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  data: string;
+  @Column('date')
+  data: Date;
 
   @Column()
   nomeCliente: string;
