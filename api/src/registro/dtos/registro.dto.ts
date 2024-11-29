@@ -2,7 +2,7 @@ import { IsString, IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateRegistroDto {
   @IsString({ message: 'A data é obrigatória e deve ser uma string.' })
-  data: string;
+  data: Date;
 
   @IsString({
     message: 'O nome do cliente é obrigatório e deve ser uma string.',
