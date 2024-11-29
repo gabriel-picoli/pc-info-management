@@ -7,12 +7,15 @@ import NavBar from './Navbar'
 const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh; /* garante que o layout ocupe exatamente a altura da tela */
+  overflow: hidden;
 `
 
 const ContentContainer = styled.div`
   flex: 1;
+  overflow-y: auto; /* permite rolagem do conteudo sem afetar o layout */
   padding: 20px;
+  box-sizing: border-box; /* inclui padding dentro do tamanho do container */
 `
 
 export default function Layout() {

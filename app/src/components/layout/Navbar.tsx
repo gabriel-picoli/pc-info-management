@@ -5,16 +5,16 @@ import { FaDollarSign, FaRegCalendarAlt, FaFileAlt } from 'react-icons/fa'
 
 const NavbarContainer = styled.div`
   display: flex;
-  padding-top: 20px;
-  padding-left: 20px;
-  gap: 50px;
+  align-items: center;
+  gap: 30px; /* gap para evitar largura excessiva */
+  padding: 10px 20px;
   background-color: white;
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
-
-  width: 100%;
+  width: 100%; /* largura fixa */
 
   @media (max-width: 425px) {
     justify-content: center;
+    padding: 10px;
   }
 `
 
@@ -22,9 +22,12 @@ const NavItem = styled(Link)<{ $isActive: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 80px; /* define um tamanho maximo fixo para evitar quebras */
+  text-align: center;
   color: #121212;
   text-decoration: none;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: ${({ $isActive }) => ($isActive ? '900' : '500')};
   transition: color 0.2s;
 
