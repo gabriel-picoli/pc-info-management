@@ -6,22 +6,22 @@ import styled from 'styled-components'
 const StyledInput = styled.input<{
   $width?: string
   $marginRight?: string
-  $disabled?: boolean
+  $readonly?: boolean
 }>`
   width: ${(props) => props.$width || '100%'};
   height: 30px;
-  background-color: ${(props) => (props.$disabled ? '#f0f0f0' : 'transparent')};
-  border: 1px solid ${(props) => (props.$disabled ? '#ccc' : '#222222')};
+  background-color: ${(props) => (props.$readonly ? '#f0f0f0' : 'transparent')};
+  border: 1px solid ${(props) => (props.$readonly ? '#ccc' : '#222222')};
   border-radius: 5px;
   padding: 10px;
   font-size: 13px;
-  color: ${(props) => (props.$disabled ? '#999' : 'black')};
+  color: ${(props) => (props.$readonly ? '#999' : 'black')};
   margin-right: ${(props) => props.$marginRight || '0px'};
   outline: none;
-  cursor: ${(props) => (props.$disabled ? 'not-allowed' : 'text')};
+  cursor: ${(props) => (props.$readonly ? 'not-allowed' : 'text')};
 
   &::placeholder {
-    color: ${(props) => (props.$disabled ? '#ccc' : '#999')};
+    color: ${(props) => (props.$readonly ? '#ccc' : '#999')};
   }
 `
 
@@ -36,7 +36,7 @@ interface InputProps {
   id: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   isCurrency?: boolean
-  disabled?: boolean 
+  readonly?: boolean
 }
 
 export default function Input({
@@ -50,7 +50,7 @@ export default function Input({
   id,
   onChange,
   isCurrency,
-  disabled, 
+  readonly = false,
 }: InputProps) {
   return (
     <Controller
@@ -65,7 +65,8 @@ export default function Input({
           type={type}
           id={id}
           placeholder={placeholder}
-          $disabled={disabled} 
+          $readonly={readonly}
+          readOnly={readonly}
           onChange={(e) => {
             field.onChange(e)
             if (isCurrency) {

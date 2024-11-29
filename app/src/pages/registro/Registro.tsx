@@ -157,7 +157,7 @@ export default function Registro() {
           id="valorDevido"
           placeholder="Valor devido"
           isCurrency
-          disabled={deveValue === 'false'}
+          readonly={deveValue === 'false'} // disabled
         />
         {errors.valorDevido && (
           <ErrorMessage>{`${errors.valorDevido.message}`}</ErrorMessage>
@@ -173,7 +173,7 @@ export default function Registro() {
           id="valorPago"
           placeholder="Valor pago"
           isCurrency
-          disabled={deveValue === 'true'}
+          readonly={deveValue === 'true'} // disabled
         />
         {errors.valorPago && (
           <ErrorMessage>{`${errors.valorPago.message}`}</ErrorMessage>

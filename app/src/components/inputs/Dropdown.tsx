@@ -35,7 +35,7 @@ interface DropdownProps {
   placeholder?: string
   id: string
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
-  $disabled?: boolean // Nova propriedade disabled
+  $disabled?: boolean
 }
 
 export default function Dropdown({
@@ -48,7 +48,7 @@ export default function Dropdown({
   placeholder,
   id,
   onChange,
-  $disabled, // Valor padrão do disabled
+  $disabled,
 }: DropdownProps) {
   return (
     <Controller
@@ -61,14 +61,14 @@ export default function Dropdown({
           $width={width}
           $marginRight={marginRight}
           id={id}
-          $disabled={$disabled} // Passando a propriedade disabled para o styled component
+          $disabled={$disabled}
           onChange={(e) => {
-            field.onChange(e) // update react-hook-form state
+            field.onChange(e)
             if (onChange) {
               onChange(e)
             }
           }}
-          disabled={$disabled} // Aqui o atributo 'disabled' está sendo aplicado ao select
+          disabled={$disabled}
         >
           {placeholder && <option value="">{placeholder}</option>}
           {options.map((option) => (
