@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from 'react-hook-form'
-import { joiResolver } from '@hookform/resolvers/joi'
 import styled from 'styled-components'
 import { useEffect } from 'react'
 
-import { registroSchema } from '../../utils/registro/registroSchema'
 import api from '../../axios-config'
 
 import Input from '../../components/inputs/Input'
@@ -42,9 +40,8 @@ export default function Registro() {
     formState: { errors },
     watch,
     setValue, // atualiza o valor dos campos
-  } = useForm({
-    resolver: joiResolver(registroSchema),
-  })
+    reset,
+  } = useForm()
 
   // monitora o valor do campo "deve?"
   const deveValue = watch('deve')
@@ -79,6 +76,7 @@ export default function Registro() {
     try {
       const response = await api.post('/registro', registroObject)
       console.log('Resposta do backend:', response.data)
+      reset()
     } catch (error) {
       console.error('Erro ao enviar dados ao backend:', error)
     }
@@ -155,7 +153,7 @@ export default function Registro() {
         <Input
           name="valorDevido"
           control={control}
-          type="number"
+          type="text"
           id="valorDevido"
           placeholder="Valor devido"
           isCurrency
@@ -197,6 +195,7 @@ export default function Registro() {
             { label: 'Cheque', value: 'cheque' },
           ]}
           placeholder="Selecione uma opção"
+          $disabled={deveValue === 'true'}
         />
         {errors.formaPagamento && (
           <ErrorMessage>{`${errors.formaPagamento.message}`}</ErrorMessage>
@@ -214,6 +213,7 @@ export default function Registro() {
             { label: 'Neuza Tomazelli Picoli', value: 'neuza' },
           ]}
           placeholder="Selecione uma opção"
+          $disabled={deveValue === 'true'}
         />
         {errors.contaAplicada && (
           <ErrorMessage>{`${errors.contaAplicada.message}`}</ErrorMessage>
